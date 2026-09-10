@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Smart College Assistant"
+description = "A modern mobile-first digital campus companion for students, faculty, parents, and administrators with academic dashboards, attendance, results, schedules, assignments, study planning, campus services, and AI-assisted tools."
+version = "1.0.0"
+id = "artifacts/smart-college-assistant"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20208
+
+[services.development]
+run = "pnpm --filter @workspace/smart-college-assistant run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/smart-college-assistant", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/smart-college-assistant/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20208"
+BASE_PATH = "/"
